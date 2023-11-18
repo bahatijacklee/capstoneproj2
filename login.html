@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | BookStore</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/10.0.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.5/firebase-auth.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLdHT6j0nbjYMMoZW7qF0OxRd3eT8wscM",
+            authDomain: "bahati-27dff.firebaseapp.com",
+            projectId: "bahati-27dff",
+            storageBucket: "bahati-27dff.appspot.com",
+            messagingSenderId: "121362102027",
+            appId: "1:121362102027:web:3145ac564ee381b89cd40e",
+            measurementId: "G-F62JZBLQ8H"
+        };
+
+        // Initialize Firebase app
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+        // Function to handle email/password sign-in
+        function signInWithEmailAndPassword() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in successfully
+                    const user = userCredential.user;
+                    console.log('Signed in:', user);
+                    // You can redirect or perform other actions upon successful sign-in
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign-in error:', errorMessage);
+                });
+        }
+
+        // Function to handle Google sign-in
+        // Function to handle Google sign-in
+        function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    // Handle successful sign-in with Google
+                    const user = result.user;
+                    console.log('Signed in with Google:', user);
+                    // You can redirect or perform other actions upon successful sign-in
+                })
+                .catch((error) => {
+                    // Handle Google sign-in errors
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Google sign-in error:', errorMessage);
+                });
+        }
+
+        // Event listener for Google sign-in button
+        document.getElementById('googleSignIn').addEventListener('click', signInWithGoogle);
+
+        // Optionally, add event listeners for other buttons if needed
+        document.getElementById('twitterSignIn').addEventListener('click', signInWithTwitter);
+    </script>
+
+
+    <div class="login-box">
+        <div class="login-header">
+            <header>Welcome</header>
+            <p>We are happy to have you back!</p>
+        </div>
+        <div class="input-box">
+            <input type="text" class="input-field" id="email" autocomplete="off" required>
+            <label for="email">Email or phone</label>
+        </div>
+        <div class="input-box">
+            <input type="password" class="input-field" id="password" autocomplete="off" required>
+            <label for="password">Password</label>
+        </div>
+        <div class="forgot">
+            <section>
+                <input type="checkbox" id="check">
+                <label for="check">Remember me</label>
+            </section>
+            <section>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </section>
+        </div>
+        <div class="input-box">
+            <input type="submit" class="input-submit" value="Sign In">
+        </div>
+        <div class="middle-text">
+            <hr>
+            <p class="or-text">Or</p>
+        </div>
+        <div class="social-sign-in">
+            <button class="input-google" id="googleSignIn">
+                <img src="images/google.svg" alt="">
+                <p>Sign In with Google</p>
+            </button>
+            <button class="input-twitter" id="twitterSignIn">
+                <img src="images/twitter.svg" alt="">
+            </button>
+        </div>
+        <div class="sign-up">
+            <p>Don't have account <a href="#">Sign up</a></p>
+        </div>
+    </div>
+</body>
+
+</html>
